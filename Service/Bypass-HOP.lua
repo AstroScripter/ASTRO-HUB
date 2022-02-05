@@ -1,13 +1,13 @@
-local goodServer
-local DataTable
+local goodServer, DataTable
 local maxPlayers = math.huge
 local gameLink = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"
+if not _G.FailList then _G.FailList = {} end
 
 local function Search()
     DataTable = game:GetService"HttpService":JSONDecode(game:HttpGetAsync(gameLink))
     for i, v in pairs(DataTable.data) do
         pcall(function ()
-            if type(v) == 'table' and v.id and v.playing and tonumber(maxPlayers) > v.maxplayers then
+            if type(v) == 'table' and v.id and v.playing and tonumber(maxPlayers) > tonumber(v.playing) and not table.find(_G.FailList, v.id) then
                 maxPlayers = v.playing
                 goodServer = v.id
             end
@@ -29,5 +29,8 @@ function FindServer()
 end
 
 wait()
-pcall(FindServer)
-game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId, goodServer)
+repeat wait(.1)
+    pcall(FindServer)
+    table.insert(_G.FailList, goodServer)
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId, goodServer)
+until nil
