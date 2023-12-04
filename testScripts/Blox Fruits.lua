@@ -1804,7 +1804,7 @@ local function ASTROHUB()
 
     -- Stop Camera
     local req = (fluxus and fluxus.request) or (http and http.request) or http_request or request or HttpPost
-    require(game:GetService'Players'.LocalPlayer.PlayerScripts.CombatFramework.CameraShaker).CameraShakeInstance.CameraShakeState = {FadingIn = 3, FadingOut = 2, Sustained = 0, Inactive = 1}
+    --require(game:GetService'Players'.LocalPlayer.PlayerScripts.CombatFramework.CameraShaker).CameraShakeInstance.CameraShakeState = {FadingIn = 3, FadingOut = 2, Sustained = 0, Inactive = 1}
     if game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit') then
         game:GetService("ReplicatedStorage").Assets:FindFirstChild('SlashHit'):Destroy()
     end
